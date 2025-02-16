@@ -5,10 +5,10 @@
  * Copyright (c) 2022, Michael Srba <Michael.Srba@seznam.cz>
  */
 
-#include <string.h>
 #include <drivers/framework.h>
-#include <lib/video/font.h>
 #include <lib/simplefb.h>
+#include <lib/video/font.h>
+#include <string.h>
 
 static void clean_fbmem(void *fb, int width, int height, int stride)
 {
@@ -17,8 +17,8 @@ static void clean_fbmem(void *fb, int width, int height, int stride)
 
 // RGB888 format
 /*
- * Unlike ARGB8888, we explicitly use 3 bytes to represent each pixel, making sure
- * no extra padding byte is added.
+ * Unlike ARGB8888, we explicitly use 3 bytes to represent each pixel, making
+ * sure no extra padding byte is added.
  */
 static void draw_pixel(volatile char *fb, int x, int y, int width, int stride,
 		       color c)
@@ -74,11 +74,21 @@ void __simplefb_raw_print(volatile char *fb, char *text, int text_x, int text_y,
 
 			for (int x = 0; x < FONTW; x++) {
 				if (((b << x) & 0b10000000) > 0) {
-					for (int dy = 0; dy < SCALE_FACTOR; dy++) {
-						for (int dx = 0; dx < SCALE_FACTOR; dx++) {
-							draw_pixel(fb, current_x + x * SCALE_FACTOR + dx,
-								   current_y + y * SCALE_FACTOR + dy,
-								   width, stride, (color){255, 255, 255});
+					for (int dy = 0; dy < SCALE_FACTOR;
+					     dy++) {
+						for (int dx = 0;
+						     dx < SCALE_FACTOR; dx++) {
+							draw_pixel(
+							    fb,
+							    current_x +
+								x * SCALE_FACTOR +
+								dx,
+							    current_y +
+								y * SCALE_FACTOR +
+								dy,
+							    width, stride,
+							    (color){255, 255,
+								    255});
 						}
 					}
 				}
@@ -92,8 +102,9 @@ void simplefb_probe(void *data)
 {
 	struct video *fb_info = data;
 
-	clean_fbmem((char*)fb_info->address, fb_info->width, fb_info->height,
-		 fb_info->stride);
+	clean_fbmem((char *)fb_info->address, fb_info->width, fb_info->height,
+		    fb_info->stride);
 
-	/* TODO: Introduce a full drivers framework that allows proper exiting */
+	/* TODO: Introduce a full drivers framework that allows proper exiting
+	 */
 }

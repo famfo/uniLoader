@@ -5,7 +5,8 @@
 
 #include <soc/exynos9810.h>
 
-void soc_init(void) {
+void soc_init(void)
+{
 	/* Allow framebuffer to be written to */
-	*(int*) (DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x1281;
+	*(int *)(DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x1281;
 }

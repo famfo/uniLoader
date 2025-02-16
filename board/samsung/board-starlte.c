@@ -7,8 +7,8 @@
 #include <drivers/framework.h>
 #include <lib/simplefb.h>
 
-#define DECON_F_BASE		0x16030000
-#define HW_SW_TRIG_CONTROL	0x70
+#define DECON_F_BASE 0x16030000
+#define HW_SW_TRIG_CONTROL 0x70
 
 void init_board_funcs(void *board)
 {
@@ -28,15 +28,12 @@ void init_board_funcs(void *board)
 int board_init(void)
 {
 	/* Allow framebuffer to be written to */
-	*(int*) (DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x1281;
+	*(int *)(DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x1281;
 	return 0;
 }
 
 // Late initialization
-int board_late_init(void)
-{
-	return 0;
-}
+int board_late_init(void) { return 0; }
 
 int board_driver_setup(void)
 {
@@ -45,12 +42,10 @@ int board_driver_setup(void)
 		int height;
 		int stride;
 		void *address;
-	} simplefb_data = {
-		.width = 1440,
-		.height = 2960,
-		.stride = 4,
-		.address = (void *)0xcc000000
-	};
+	} simplefb_data = {.width = 1440,
+			   .height = 2960,
+			   .stride = 4,
+			   .address = (void *)0xcc000000};
 
 	REGISTER_DRIVER("simplefb", simplefb_probe, &simplefb_data);
 	return 0;

@@ -3,28 +3,29 @@
  * Copyright (c) 2024, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
  */
 
-#include "stdbool.h"
 #include "string.h"
+#include "stdbool.h"
 
-void *memset (void *m, int c, size_t n)
+void *memset(void *m, int c, size_t n)
 {
-	char *s = (char *) m;
+	char *s = (char *)m;
 
 	unsigned int i;
 	unsigned long buffer;
 	unsigned long *aligned_addr;
 	unsigned int d = c & 0xff;
 
-	while (UNALIGNED (s)) {
+	while (UNALIGNED(s)) {
 		if (n--)
-			*s++ = (char) c;
+			*s++ = (char)c;
 		else
 			return m;
 	}
 
-	if (!TOO_SMALL (n)) {
-		/* If we get this far, we know that n is large and s is word-aligned. */
-		aligned_addr = (unsigned long *) s;
+	if (!TOO_SMALL(n)) {
+		/* If we get this far, we know that n is large and s is
+		 * word-aligned. */
+		aligned_addr = (unsigned long *)s;
 
 		/*
 		 * Store D into each char sized location in BUFFER so that
@@ -36,21 +37,21 @@ void *memset (void *m, int c, size_t n)
 			buffer = (buffer << i) | buffer;
 
 		/* Unroll the loop. */
-		while (n >= LBLOCKSIZE*4) {
+		while (n >= LBLOCKSIZE * 4) {
 			*aligned_addr++ = buffer;
 			*aligned_addr++ = buffer;
 			*aligned_addr++ = buffer;
 			*aligned_addr++ = buffer;
-			n -= 4*LBLOCKSIZE;
+			n -= 4 * LBLOCKSIZE;
 		}
 
-		while (n >= LBLOCKSIZE)	{
+		while (n >= LBLOCKSIZE) {
 			*aligned_addr++ = buffer;
 			n -= LBLOCKSIZE;
 		}
 
 		/* Pick up the remainder with a bytewise loop.	*/
-		s = (char*)aligned_addr;
+		s = (char *)aligned_addr;
 	}
 
 	return m;
@@ -98,7 +99,6 @@ char *strcpy(char *s1, const char *s2)
 
 	return rc;
 }
-
 
 char *strncpy(char *d, char *s, long n)
 {
@@ -211,13 +211,10 @@ long atol(const char *s)
 	return val;
 }
 
-void writel(unsigned int value, void* address)
+void writel(unsigned int value, void *address)
 {
-	volatile unsigned int* ptr = (volatile unsigned int*)address;
+	volatile unsigned int *ptr = (volatile unsigned int *)address;
 	*ptr = value;
 }
 
-uint32_t readl(volatile uint32_t *addr)
-{
-	return *addr;
-}
+uint32_t readl(volatile uint32_t *addr) { return *addr; }

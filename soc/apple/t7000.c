@@ -5,6 +5,4 @@
 
 #include <soc/t7000.h>
 
-void soc_init(void) {
-
-}
+void soc_init(void) {}

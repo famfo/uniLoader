@@ -3,11 +3,11 @@
  * Copyright (c) 2022, Ivaylo Ivanov <ivo.ivanov.ivanov1@gmail.com>
  */
 
-#include <stddef.h>
-#include <string.h>
 #include <lib/debug.h>
 #include <lib/simplefb.h>
 #include <lib/video/font.h>
+#include <stddef.h>
+#include <string.h>
 
 long int debug_linecount = 0;
 
@@ -55,9 +55,11 @@ void printk(int log_level, char *text)
 	int y_pos = 5;
 	int prefix_width = strlen(prefix) * SCALED_FONTW;
 
-	__simplefb_raw_print((char*)CONFIG_FRAMEBUFFER_BASE, prefix, 0, y_pos,
-		  CONFIG_FRAMEBUFFER_WIDTH, CONFIG_FRAMEBUFFER_STRIDE);
-	__simplefb_raw_print((char*)CONFIG_FRAMEBUFFER_BASE, text, prefix_width, y_pos,
-		  CONFIG_FRAMEBUFFER_WIDTH, CONFIG_FRAMEBUFFER_STRIDE);
+	__simplefb_raw_print((char *)CONFIG_FRAMEBUFFER_BASE, prefix, 0, y_pos,
+			     CONFIG_FRAMEBUFFER_WIDTH,
+			     CONFIG_FRAMEBUFFER_STRIDE);
+	__simplefb_raw_print((char *)CONFIG_FRAMEBUFFER_BASE, text,
+			     prefix_width, y_pos, CONFIG_FRAMEBUFFER_WIDTH,
+			     CONFIG_FRAMEBUFFER_STRIDE);
 #endif
 }

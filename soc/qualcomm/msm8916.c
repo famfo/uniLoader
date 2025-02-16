@@ -5,6 +5,4 @@
 
 #include <soc/msm8916.h>
 
-void soc_init(void) {
-	
-}
+void soc_init(void) {}

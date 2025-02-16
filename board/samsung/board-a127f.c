@@ -16,35 +16,31 @@ void init_board_funcs(void *board)
 		int ops[BOARD_OP_EXIT];
 	} *board_restruct = board;
 
-        board_restruct->name = "A127F";
+	board_restruct->name = "A127F";
 }
 
 int board_init(void)
 {
-    *(int*) (DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x1281;
-    return 0;
+	*(int *)(DECON_F_BASE + HW_SW_TRIG_CONTROL) = 0x1281;
+	return 0;
 }
 
-int board_late_init(void)
-{
-    return 0;
-}
+int board_late_init(void) { return 0; }
 
 int board_driver_setup(void)
 {
-    struct {
+	struct {
 		int width;
 		int height;
 		int stride;
 		void *address;
 	} simplefb_data = {
-		.width = 720,
-		.height = 1600,
-		.stride = 4,
-		.address = (void *) 0xfa000000,
+	    .width = 720,
+	    .height = 1600,
+	    .stride = 4,
+	    .address = (void *)0xfa000000,
 	};
 
 	REGISTER_DRIVER("simplefb", simplefb_probe, &simplefb_data);
 	return 0;
 }
-
